@@ -21,6 +21,6 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
-        with :
+        with:
           name: Spring Boot CI Pipeline
           path:  target/*.jar
