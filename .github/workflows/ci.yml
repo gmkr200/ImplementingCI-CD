@@ -26,4 +26,9 @@ jobs:
         with:
           name: springboot-jar
           path: target/*.jar
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+           name: springboot-jar
+
 
