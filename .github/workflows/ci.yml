@@ -56,6 +56,10 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            echo "Ensuring directories exist"
+            mkdir -p /opt/apps/jobapp/logs
+            mkdir -p /opt/apps/jobapp/run
+
             echo "Stopping old app (if any)"
             if [ -f /opt/apps/jobapp/run/app.pid ]; then
               kill $(cat /opt/apps/jobapp/run/app.pid) || true
