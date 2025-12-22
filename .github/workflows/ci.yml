@@ -55,11 +55,14 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script_stop: false
           script: |
             echo "Stopping old app (if any)"
-            pkill -f app.jar || true
+            if [ -f /opt/apps/jobapp/run/app.pid ]; then
+              kill $(cat /opt/apps/jobapp/run/app.pid) || true
+              rm -f /opt/apps/jobapp/run/app.pid
+            fi
 
             echo "Starting new app"
             nohup java -jar /opt/apps/jobapp/app.jar \
               > /opt/apps/jobapp/logs/app.log 2>&1 &
+            echo $! > /opt/apps/jobapp/run/app.pid
